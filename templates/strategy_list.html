@@ -1,4 +1,9 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% block content %}
-<h2>Strategy List</h2>
+<h2>전략 카드 전체</h2>
+<ul>
+  {% for s in strategies %}
+    <li><a href="/strategy/{{ s.id }}">{{ s.title }}</a></li>
+  {% endfor %}
+</ul>
 {% endblock %}

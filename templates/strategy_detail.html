@@ -1,4 +1,12 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% block content %}
-<h2>Strategy Detail</h2>
+<h2>{{ strategy.title }}</h2>
+<p>{{ strategy.summary }}</p>
+
+<h3>직군별 해석</h3>
+<ul>
+  {% for role, comment in strategy.role_annotations.items() %}
+    <li><strong>{{ role }}:</strong> {{ comment }}</li>
+  {% endfor %}
+</ul>
 {% endblock %}

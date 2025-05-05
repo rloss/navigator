@@ -1,10 +1,12 @@
 from flask import Flask
 from app.models import db
+from app.views import register_blueprints
 
-app = Flask(__name__)
+import os
+
+app = Flask(__name__, template_folder=os.path.join(os.path.dirname(__file__), '../templates'))
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///strategy.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db.init_app(app)
 
-# 라우트 등록
-from app.views import home, trends, strategies, strategy_select, mypage, my_strategies, mypage_edit, admin, auth
+db.init_app(app)
+register_blueprints(app)

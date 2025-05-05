@@ -1,4 +1,9 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% block content %}
-<h2>Trend List</h2>
+<h2>트렌드 리스트</h2>
+<ul>
+  {% for t in trends %}
+    <li><a href="/trend/{{ t.id }}">{{ t.title }}</a></li>
+  {% endfor %}
+</ul>
 {% endblock %}

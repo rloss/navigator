@@ -1,4 +1,19 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% block content %}
-<h2>Trend Detail</h2>
+<h2>{{ trend.title }}</h2>
+<p>{{ trend.summary }}</p>
+
+<h3>시나리오</h3>
+<ul>
+  {% for s in scenarios %}
+    <li>{{ s.summary }}</li>
+  {% endfor %}
+</ul>
+
+<h3>전략 카드</h3>
+<ul>
+  {% for card in strategies %}
+    <li><a href="/strategy/{{ card.id }}">{{ card.title }}</a></li>
+  {% endfor %}
+</ul>
 {% endblock %}
