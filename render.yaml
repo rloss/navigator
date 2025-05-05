@@ -1,0 +1,8 @@
+services:
+  - type: web
+    name: strategy-navigator
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn run:app
+    plan: free
+    autoDeploy: true

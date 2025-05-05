@@ -4,3 +4,4 @@ openai
 supabase
 requests
 feedparser
+gunicorn

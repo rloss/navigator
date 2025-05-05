@@ -3,14 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <title>전략 내비게이터</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+    }
+    .sidebar {
+      width: 220px;
+      background-color: #1a1a1a;
+      color: #fff;
+      height: 100vh;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .sidebar h2 {
+      font-size: 20px;
+      margin-bottom: 30px;
+    }
+    .sidebar a {
+      display: block;
+      color: #ccc;
+      text-decoration: none;
+      margin: 12px 0;
+    }
+    .sidebar a:hover {
+      color: #fff;
+    }
+    .main {
+      flex: 1;
+      padding: 30px;
+      background: #f5f5f5;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1><a href="/">📍 전략 내비게이터</a></h1>
-    <hr>
-  </header>
-  <main>
+  <div class="sidebar">
+    <h2>📍 내비게이터</h2>
+    <a href="/">🏠 홈</a>
+    <a href="/trends">📊 트렌드</a>
+    <a href="/strategies">🧠 전략 카드</a>
+    <a href="/mypage">👤 마이페이지</a>
+    <a href="/mypage/edit">⚙️ 프로필 수정</a>
+  </div>
+
+  <div class="main">
     {% block content %}{% endblock %}
-  </main>
+  </div>
 </body>
 </html>
+
