@@ -1,9 +1,11 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>트렌드 리스트</h2>
+<h2>📊 트렌드 리스트</h2>
 <ul>
-  {% for t in trends %}
-    <li><a href="/trend/{{ t.id }}">{{ t.title }}</a></li>
+  {% for trend in trends %}
+    <li><a href="/trend/{{ trend.id }}">{{ trend.title }}</a></li>
+  {% else %}
+    <li>등록된 트렌드가 없습니다.</li>
   {% endfor %}
 </ul>
 {% endblock %}

@@ -7,6 +7,8 @@
 <ul>
   {% for s in scenarios %}
     <li>{{ s.summary }}</li>
+  {% else %}
+    <li>시나리오 없음</li>
   {% endfor %}
 </ul>
 
@@ -14,6 +16,9 @@
 <ul>
   {% for card in strategies %}
     <li><a href="/strategy/{{ card.id }}">{{ card.title }}</a></li>
+  {% else %}
+    <li>전략 카드 없음</li>
   {% endfor %}
 </ul>
 {% endblock %}
+

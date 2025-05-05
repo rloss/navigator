@@ -1,4 +1,6 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% block content %}
-<h2>Mypage</h2>
+<h2>👤 마이페이지</h2>
+<p>현재 로그인 중: {{ user_id }}</p>
+<p><a href="/mypage/strategies">내 전략 카드 전체 보기 →</a></p>
 {% endblock %}

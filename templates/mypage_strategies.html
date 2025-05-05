@@ -1,4 +1,11 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% block content %}
-<h2>Mypage Strategies</h2>
+<h2>📌 내가 선택한 전략 카드</h2>
+<ul>
+  {% for s in strategies %}
+    <li><strong>{{ s.title }}</strong> — {{ s.trend_title }}</li>
+  {% else %}
+    <li>선택한 전략 카드가 없습니다.</li>
+  {% endfor %}
+</ul>
 {% endblock %}

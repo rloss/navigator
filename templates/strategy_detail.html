@@ -7,6 +7,13 @@
 <ul>
   {% for role, comment in strategy.role_annotations.items() %}
     <li><strong>{{ role }}:</strong> {{ comment }}</li>
+  {% else %}
+    <li>해석 없음</li>
   {% endfor %}
 </ul>
+
+<form method="POST" action="/strategy/{{ strategy.id }}/select">
+  <button type="submit">이 전략 선택하기</button>
+</form>
 {% endblock %}
+

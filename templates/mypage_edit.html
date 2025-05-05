@@ -1,4 +1,9 @@
-{% extends 'layout.html' %}
+{% extends "layout.html" %}
 {% block content %}
-<h2>Mypage Edit</h2>
+<h2>⚙️ 내 프로필 수정</h2>
+<form method="POST">
+  <label>내 역할/관심사/상황</label><br>
+  <input type="text" name="profile_info"><br><br>
+  <button type="submit">저장</button>
+</form>
 {% endblock %}

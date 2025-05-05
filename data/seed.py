@@ -1,31 +1,36 @@
+import sys
+import os
+from pathlib import Path
+
+# 현재 프로젝트 루트 경로를 import 경로에 추가
+sys.path.append(str(Path(__file__).resolve().parent.parent))
+
 from app import app
 from app.models import db, Trend, Scenario, StrategyCard
 
 with app.app_context():
+    print("📦 DB 테이블 생성 시작...")
     db.create_all()
 
-    # 트렌드 1개 생성
+    # ✅ 여기서 테스트용 더미 데이터 삽입
     trend = Trend(
-        id="trend1",
-        title="생성형 AI의 업무 재편",
-        summary="GPT 등 AI 도구의 확산이 일하는 방식을 어떻게 바꾸는가?"
+        id="t1",
+        title="생성형 AI의 확산",
+        summary="GPT와 같은 AI 도구들이 업무에 어떤 영향을 미치는가?"
     )
     db.session.add(trend)
 
-    # 시나리오 2개
-    s1 = Scenario(id="sc1", summary="기획자들이 PPT를 직접 만들지 않는다", trend=trend)
-    s2 = Scenario(id="sc2", summary="1인 업무 자동화 도구 세팅이 일반화됨", trend=trend)
-    db.session.add_all([s1, s2])
-
-    # 전략 카드 1개
+    scenario = Scenario(id="s1", summary="디자이너가 직접 UI 안 만들고 GPT에게 요청", trend=trend)
     strategy = StrategyCard(
         id="st1",
-        title="나만의 AI 워크플로우 세팅하기",
-        summary="GPT + Notion + Zapier를 엮어 일의 흐름을 자동화한다",
-        role_annotations={"기획자": "보고서 자동화", "디자이너": "이미지 자동 생성 연계"},
+        title="1인 자동화 플로우 만들기",
+        summary="GPT + Notion + Zapier 연계로 자동화",
+        role_annotations={"디자이너": "이미지 생성", "기획자": "보고서 자동화"},
         trend=trend
     )
+    db.session.add(scenario)
     db.session.add(strategy)
 
     db.session.commit()
-    print("✅ 목업 데이터 삽입 완료")
+    print("✅ DB 테이블 + 목업 데이터 삽입 완료")
+

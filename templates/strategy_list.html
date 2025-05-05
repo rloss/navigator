@@ -1,9 +1,12 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>전략 카드 전체</h2>
+<h2>🧠 전체 전략 카드</h2>
 <ul>
   {% for s in strategies %}
     <li><a href="/strategy/{{ s.id }}">{{ s.title }}</a></li>
+  {% else %}
+    <li>등록된 전략 카드가 없습니다.</li>
   {% endfor %}
 </ul>
 {% endblock %}
+
