@@ -34,22 +34,45 @@
       flex: 1;
       padding: 30px;
       background: #f5f5f5;
+      position: relative;
+    }
+    .topbar {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+    }
+    .topbar a {
+      margin-left: 20px;
+      color: #444;
+      text-decoration: none;
+    }
+    .topbar a:hover {
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
   <div class="sidebar">
     <h2>📍 내비게이터</h2>
-    <a href="/">🏠 홈</a>
-    <a href="/trends">📊 트렌드</a>
-    <a href="/strategies">🧠 전략 카드</a>
-    <a href="/mypage">👤 마이페이지</a>
-    <a href="/mypage/edit">⚙️ 프로필 수정</a>
+    <a href="/">홈</a>
+    <a href="/trends">트렌드</a>
+    <a href="/strategies">전략 카드</a>
+    <a href="/mypage">마이페이지</a>
   </div>
 
   <div class="main">
+    <div class="topbar">
+      {% if session.user_id %}
+        <a href="/mypage">👤 마이페이지</a>
+        <a href="/logout">🔓 로그아웃</a>
+      {% else %}
+        <a href="/login">🔐 로그인</a>
+      {% endif %}
+    </div>
+
     {% block content %}{% endblock %}
   </div>
 </body>
 </html>
+
 
