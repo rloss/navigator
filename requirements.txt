@@ -5,3 +5,4 @@ supabase
 requests
 feedparser
 gunicorn
+dotenv
