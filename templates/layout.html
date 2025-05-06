@@ -4,36 +4,33 @@
   <meta charset="UTF-8">
   <title>전략 내비게이터</title>
 
-  <!-- main.css 추가 -->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <!-- main.css -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
 
-<!-- 폰트 링크 -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/suit-webfont@1.0.1/suit.css">
+  <!-- 폰트 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/suit-webfont@1.0.1/suit.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-
-  <!-- ✅ Tailwind CSS (CDN) -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- ✅ Flowbite -->
+  <!-- Flowbite (추후 필요 시 사용) -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
 
-  <!-- ✅ Inter 폰트 (Google Fonts) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
   <style>
     body {
-      font-family: 'Inter', sans-serif;
+      font-family: 'Inter', 'Pretendard', 'SUIT', sans-serif;
     }
   </style>
 </head>
 <body class="bg-[#0f172a] text-[#f8fafc] flex min-h-screen">
 
-  <!-- ✅ 사이드바 -->
-  <aside class="w-64 bg-[#1e293b] p-6 flex flex-col gap-4 fixed h-full">
-    <h1 class="text-xl font-bold tracking-wide">📍 내비게이터</h1>
-    <nav class="flex flex-col gap-3 text-sm">
+  <!-- ✅ 사이드바 (토글 대상) -->
+  <aside id="sidebar" class="w-64 bg-[#1e293b] p-6 flex flex-col gap-4 fixed h-full transition-transform duration-300">
+    <h1 class="text-xl font-bold tracking-wide text-white">📍 내비게이터</h1>
+    <nav class="flex flex-col gap-3 text-sm mt-4">
       <a href="/" class="hover:text-blue-400">홈</a>
       <a href="/trends" class="hover:text-blue-400">트렌드</a>
       <a href="/strategies" class="hover:text-blue-400">전략 카드</a>
@@ -41,8 +38,13 @@
     </nav>
   </aside>
 
+  <!-- ✅ 토글 버튼 -->
+  <button id="toggleSidebar" class="fixed top-4 left-4 z-50 text-white bg-gray-800 hover:bg-gray-700 rounded-md p-2 focus:outline-none">
+    ☰
+  </button>
+
   <!-- ✅ 메인 콘텐츠 -->
-  <main class="ml-64 w-full p-10 relative bg-[#f5f5f5] text-[#1e293b] min-h-screen">
+  <main class="ml-64 w-full p-10 relative bg-[#f5f5f5] text-[#1e293b] min-h-screen transition-all duration-300" id="mainContent">
     <!-- 상단 바 -->
     <div class="absolute top-6 right-10 space-x-4">
       {% if session.user_id %}
@@ -53,11 +55,33 @@
       {% endif %}
     </div>
 
-    <!-- ✅ 페이지별 콘텐츠 블록 -->
+    <!-- 페이지 콘텐츠 -->
     {% block content %}{% endblock %}
   </main>
+
+  <!-- ✅ 사이드바 토글 스크립트 -->
+  <script>
+    const toggleBtn = document.getElementById("toggleSidebar");
+    const sidebar = document.getElementById("sidebar");
+    const main = document.getElementById("mainContent");
+
+    toggleBtn.addEventListener("click", () => {
+      if (sidebar.classList.contains("-translate-x-full")) {
+        sidebar.classList.remove("-translate-x-full");
+        main.classList.add("ml-64");
+      } else {
+        sidebar.classList.add("-translate-x-full");
+        main.classList.remove("ml-64");
+      }
+    });
+
+    // 초기 상태에 transition 클래스 추가
+    sidebar.classList.add("transition-transform", "duration-300");
+    main.classList.add("transition-all", "duration-300");
+  </script>
 </body>
 </html>
+
 
 
 
