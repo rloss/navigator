@@ -2,5 +2,11 @@
 {% block content %}
 <h2>👤 마이페이지</h2>
 <p>현재 로그인 중: {{ user_id }}</p>
-<p><a href="/mypage/strategies">내 전략 카드 전체 보기 →</a></p>
+
+{% if is_admin %}
+  <p>🛡️ 관리자 계정입니다.</p>
+  <p><a href="/admin">🗂️ 관리자 승인 페이지로 가기</a></p>
+{% else %}
+  <p><a href="/mypage/strategies">내 전략 카드 보기</a></p>
+{% endif %}
 {% endblock %}

@@ -1,8 +1,12 @@
 from flask import Flask
 from app.models import db
 from app.views import register_blueprints
+from dotenv import load_dotenv
 
 import os
+
+# 🔁 .env 파일 로드 (로컬에서만 적용됨)
+load_dotenv()
 
 app = Flask(
     __name__,
@@ -10,13 +14,16 @@ app = Flask(
     static_folder=os.path.join(os.path.dirname(__file__), '../static')
 )
 
-# 🔐 세션을 위한 비밀 키 설정
-app.secret_key = "supersecret"  # 반드시 나중에 .env로 대체해야 함
+# 🔐 세션 비밀키는 환경변수에서 가져옴
+app.secret_key = os.getenv("SECRET_KEY", "fallback-secret-key")
 
-# DB 설정
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///strategy.db'
+# 📦 PostgreSQL 연동 (DATABASE_URL은 .env 또는 Render에서 설정)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# DB 초기화
 db.init_app(app)
 
-# 모든 라우트 블루프린트 등록
+# 라우트 등록
 register_blueprints(app)
+

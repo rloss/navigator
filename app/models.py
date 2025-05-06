@@ -34,3 +34,9 @@ class UserStrategy(db.Model):
     summary = db.Column(db.Text)
     trend_title = db.Column(db.String)
     selected_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class User(db.Model):
+    __tablename__ = "user"
+    id = db.Column(db.String, primary_key=True)  # 로그인용 ID
+    password = db.Column(db.String)
+    is_admin = db.Column(db.Boolean, default=False)

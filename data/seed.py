@@ -34,3 +34,7 @@ with app.app_context():
     db.session.commit()
     print("✅ DB 테이블 + 목업 데이터 삽입 완료")
 
+from app.models import User
+
+admin = User(id="admin", password="admin1234", is_admin=True)
+db.session.add(admin)
