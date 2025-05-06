@@ -1,43 +1,60 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2 class="text-2xl font-bold text-gray-800 mb-6">🛠️ 관리자 콘텐츠 대시보드</h2>
+<h2 class="text-2xl font-bold text-gray-800 mb-8">🛠️ 관리자 콘텐츠 대시보드</h2>
 
-<!-- 트렌드 목록 -->
-<section class="mb-12">
-  <h3 class="text-xl font-semibold text-gray-700 mb-3">📊 트렌드</h3>
-  <ul class="space-y-2">
-    {% for t in trends %}
-      <li class="bg-white rounded p-4 shadow-sm flex justify-between items-center">
-        <div>
-          <strong>{{ t.title }}</strong> ({{ t.id }})<br>
-          <span class="text-sm text-gray-500">전략 {{ t.strategies|length }}개 / 시나리오 {{ t.scenarios|length }}개</span>
-        </div>
-        <div class="space-x-2 text-sm">
-          <a href="/admin/trend/{{ t.id }}/edit" class="text-blue-600 hover:underline">✏️ 수정</a>
-          <form method="POST" action="/admin/trend/{{ t.id }}/delete" style="display:inline">
-            <button class="text-red-600 hover:underline">🗑 삭제</button>
-          </form>
-        </div>
-      </li>
-    {% endfor %}
-  </ul>
+<!-- ✅ 트렌드 관리 -->
+<section class="mb-14">
+  <div class="flex justify-between items-center mb-4">
+    <h3 class="text-xl font-semibold text-gray-700">📊 등록된 트렌드</h3>
+    <a href="/admin/trends/new" class="text-sm bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition">➕ 새 트렌드 등록</a>
+  </div>
+
+  {% if trends %}
+    <ul class="space-y-3">
+      {% for t in trends %}
+        <li class="bg-white rounded-lg p-5 shadow flex justify-between items-center">
+          <div>
+            <div class="font-semibold text-gray-900">{{ t.title }}</div>
+            <div class="text-sm text-gray-500">
+              {{ t.id }} | 전략 {{ t.strategies|length }}개 / 시나리오 {{ t.scenarios|length }}개
+            </div>
+          </div>
+          <div class="flex gap-2 text-sm">
+            <a href="/admin/trend/{{ t.id }}/edit" class="text-blue-600 hover:underline">✏️ 수정</a>
+            <form method="POST" action="/admin/trend/{{ t.id }}/delete" onsubmit="return confirm('트렌드를 삭제할까요?')" style="display:inline">
+              <button class="text-red-600 hover:underline">🗑 삭제</button>
+            </form>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-sm text-gray-500">등록된 트렌드가 없습니다.</p>
+  {% endif %}
 </section>
 
-<!-- 전략 카드 목록 -->
+<!-- ✅ 전략 카드 관리 -->
 <section>
-  <h3 class="text-xl font-semibold text-gray-700 mb-3">🧠 전략 카드</h3>
-  <ul class="space-y-2">
-    {% for s in strategies %}
-      <li class="bg-white rounded p-4 shadow-sm flex justify-between items-center">
-        <div>
-          <strong>{{ s.title }}</strong><br>
-          <span class="text-sm text-gray-500">트렌드: {{ s.trend.title if s.trend else '없음' }}</span>
-        </div>
-        <form method="POST" action="/admin/strategy/{{ s.id }}/delete" style="display:inline">
-          <button class="text-red-600 hover:underline text-sm">🗑 삭제</button>
-        </form>
-      </li>
-    {% endfor %}
-  </ul>
+  <h3 class="text-xl font-semibold text-gray-700 mb-4">🧠 전략 카드 전체 보기</h3>
+
+  {% if strategies %}
+    <ul class="space-y-3">
+      {% for s in strategies %}
+        <li class="bg-white rounded-lg p-5 shadow flex justify-between items-center">
+          <div>
+            <div class="font-semibold text-gray-900">{{ s.title }}</div>
+            <div class="text-sm text-gray-500">
+              전략 ID: {{ s.id }} | 트렌드: {{ s.trend.title if s.trend else '없음' }}
+            </div>
+          </div>
+          <form method="POST" action="/admin/strategy/{{ s.id }}/delete" onsubmit="return confirm('전략 카드를 삭제할까요?')" style="display:inline">
+            <button class="text-red-600 hover:underline text-sm">🗑 삭제</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-sm text-gray-500">전략 카드가 아직 없습니다.</p>
+  {% endif %}
 </section>
 {% endblock %}
