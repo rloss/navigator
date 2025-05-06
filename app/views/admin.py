@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, session
 from app.models import db, Trend, Scenario, StrategyCard
 
 admin_bp = Blueprint("admin", __name__)
@@ -109,3 +109,17 @@ def delete_strategy(strategy_id):
     db.session.delete(strategy)
     db.session.commit()
     return redirect(url_for("admin.edit_trend", trend_id=trend_id))
+
+@admin_bp.route("/admin")
+def admin_dashboard():
+    if not session.get("is_admin"):
+        return "접근 권한이 없습니다", 403
+
+    trends = Trend.query.all()
+    strategies = StrategyCard.query.all()
+
+    return render_template(
+        "admin_dashboard.html",
+        trends=trends,
+        strategies=strategies
+    )
