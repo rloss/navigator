@@ -5,4 +5,5 @@ supabase
 requests
 feedparser
 gunicorn
-dotenv
+python-dotenv
+psycopg2-binary
