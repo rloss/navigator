@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>🧠 전체 전략 카드</h2>
+<h1>🧠 전체 전략 카드</h1>
 <ul>
   {% for s in strategies %}
     <li><a href="/strategy/{{ s.id }}">{{ s.title }}</a></li>

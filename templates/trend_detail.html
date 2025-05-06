@@ -1,24 +1,42 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>{{ trend.title }}</h2>
-<p>{{ trend.summary }}</p>
 
-<h3>시나리오</h3>
-<ul>
-  {% for s in scenarios %}
-    <li>{{ s.summary }}</li>
-  {% else %}
-    <li>시나리오 없음</li>
-  {% endfor %}
-</ul>
+<!-- 🔷 트렌드 요약 -->
+<section class="bg-white rounded-xl p-6 shadow-md mb-8">
+  <h2 class="text-2xl font-bold text-gray-900">{{ trend.title }}</h2>
+  <p class="mt-2 text-gray-600">{{ trend.summary }}</p>
+</section>
 
-<h3>전략 카드</h3>
-<ul>
-  {% for card in strategies %}
-    <li><a href="/strategy/{{ card.id }}">{{ card.title }}</a></li>
-  {% else %}
-    <li>전략 카드 없음</li>
-  {% endfor %}
-</ul>
+<!-- 🧩 시나리오 목록 -->
+<section class="mb-10">
+  <h3 class="text-xl font-semibold text-gray-800 mb-3">시나리오</h3>
+  <ul class="space-y-2">
+    {% for s in scenarios %}
+      <li class="bg-gray-100 rounded-md px-4 py-2 text-sm text-gray-700">
+        {{ s.summary }}
+      </li>
+    {% else %}
+      <li class="text-sm text-gray-500">시나리오 없음</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<!-- 🧠 전략 카드 목록 -->
+<section>
+  <h3 class="text-xl font-semibold text-gray-800 mb-4">관련 전략 카드</h3>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+    {% for card in strategies %}
+      <div class="bg-white rounded-xl p-5 shadow hover:shadow-lg transition">
+        <h4 class="text-lg font-semibold text-gray-900">{{ card.title }}</h4>
+        <p class="text-sm text-gray-600 mt-2">{{ card.summary }}</p>
+        <a href="/strategy/{{ card.id }}" class="mt-4 inline-block text-blue-600 hover:underline text-sm font-medium">자세히 보기 →</a>
+      </div>
+    {% else %}
+      <p class="text-sm text-gray-500">전략 카드 없음</p>
+    {% endfor %}
+  </div>
+</section>
+
 {% endblock %}
+
 

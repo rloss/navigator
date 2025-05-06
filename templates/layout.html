@@ -3,76 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <title>전략 내비게이터</title>
+
+  <!-- ✅ Tailwind CSS (CDN) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- ✅ Flowbite -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.js"></script>
+
+  <!-- ✅ Inter 폰트 (Google Fonts) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
   <style>
     body {
-      margin: 0;
-      font-family: sans-serif;
-      display: flex;
-    }
-    .sidebar {
-      width: 220px;
-      background-color: #1a1a1a;
-      color: #fff;
-      height: 100vh;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    .sidebar h2 {
-      font-size: 20px;
-      margin-bottom: 30px;
-    }
-    .sidebar a {
-      display: block;
-      color: #ccc;
-      text-decoration: none;
-      margin: 12px 0;
-    }
-    .sidebar a:hover {
-      color: #fff;
-    }
-    .main {
-      flex: 1;
-      padding: 30px;
-      background: #f5f5f5;
-      position: relative;
-    }
-    .topbar {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-    }
-    .topbar a {
-      margin-left: 20px;
-      color: #444;
-      text-decoration: none;
-    }
-    .topbar a:hover {
-      text-decoration: underline;
+      font-family: 'Inter', sans-serif;
     }
   </style>
 </head>
-<body>
-  <div class="sidebar">
-    <h2>📍 내비게이터</h2>
-    <a href="/">홈</a>
-    <a href="/trends">트렌드</a>
-    <a href="/strategies">전략 카드</a>
-    <a href="/mypage">마이페이지</a>
-  </div>
+<body class="bg-[#0f172a] text-[#f8fafc] flex min-h-screen">
 
-  <div class="main">
-    <div class="topbar">
+  <!-- ✅ 사이드바 -->
+  <aside class="w-64 bg-[#1e293b] p-6 flex flex-col gap-4 fixed h-full">
+    <h1 class="text-xl font-bold tracking-wide">📍 내비게이터</h1>
+    <nav class="flex flex-col gap-3 text-sm">
+      <a href="/" class="hover:text-blue-400">홈</a>
+      <a href="/trends" class="hover:text-blue-400">트렌드</a>
+      <a href="/strategies" class="hover:text-blue-400">전략 카드</a>
+      <a href="/mypage" class="hover:text-blue-400">마이페이지</a>
+    </nav>
+  </aside>
+
+  <!-- ✅ 메인 콘텐츠 -->
+  <main class="ml-64 w-full p-10 relative bg-[#f5f5f5] text-[#1e293b] min-h-screen">
+    <!-- 상단 바 -->
+    <div class="absolute top-6 right-10 space-x-4">
       {% if session.user_id %}
-        <a href="/mypage">👤 마이페이지</a>
-        <a href="/logout">🔓 로그아웃</a>
+        <a href="/mypage" class="text-sm text-gray-700 hover:underline">👤 마이페이지</a>
+        <a href="/logout" class="text-sm text-gray-700 hover:underline">🔓 로그아웃</a>
       {% else %}
-        <a href="/login">🔐 로그인</a>
+        <a href="/login" class="text-sm text-gray-700 hover:underline">🔐 로그인</a>
       {% endif %}
     </div>
 
+    <!-- ✅ 페이지별 콘텐츠 블록 -->
     {% block content %}{% endblock %}
-  </div>
+  </main>
 </body>
 </html>
+
 
 
