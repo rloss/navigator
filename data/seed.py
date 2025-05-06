@@ -2,7 +2,6 @@ import sys
 import os
 from pathlib import Path
 
-# 프로젝트 루트 경로를 sys.path에 추가
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from app import app
@@ -12,25 +11,25 @@ with app.app_context():
     print("📦 DB 테이블 생성 시작...")
     db.create_all()
 
-    # ✅ 관리자 계정 추가 (중복 방지)
+    # ✅ 관리자 계정
     if not User.query.get("admin"):
         admin = User(id="admin", password="admin1234", is_admin=True)
         db.session.add(admin)
         print("✅ 관리자 계정 생성")
 
-    # ✅ 트렌드 데이터 추가 (중복 방지)
-    if not Trend.query.get("t1"):
+    # ✅ 트렌드
+    trend = Trend.query.get("t1")
+    if not trend:
         trend = Trend(
             id="t1",
             title="생성형 AI의 확산",
             summary="GPT와 같은 AI 도구들이 업무에 어떤 영향을 미치는가?"
         )
         db.session.add(trend)
+        db.session.flush()  # trend.id 바로 사용 가능하게
         print("✅ 트렌드 생성")
-    else:
-        trend = Trend.query.get("t1")
 
-    # ✅ 시나리오 추가
+    # ✅ 시나리오
     if not Scenario.query.get("s1"):
         scenario = Scenario(
             id="s1",
@@ -40,7 +39,7 @@ with app.app_context():
         db.session.add(scenario)
         print("✅ 시나리오 생성")
 
-    # ✅ 전략 카드 추가
+    # ✅ 전략 카드
     if not StrategyCard.query.get("st1"):
         strategy = StrategyCard(
             id="st1",
@@ -56,4 +55,4 @@ with app.app_context():
         print("✅ 전략 카드 생성")
 
     db.session.commit()
-    print("✅ DB 테이블 + 중복 체크된 목업 데이터 삽입 완료")
+    print("✅ DB 테이블 + 데이터 삽입 완료")
