@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, session
+from app.models import db, User
 
 mypage_bp = Blueprint("mypage", __name__)
 
