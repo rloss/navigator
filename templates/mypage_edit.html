@@ -1,9 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>⚙️ 내 프로필 수정</h2>
-<form method="POST">
-  <label>내 역할/관심사/상황</label><br>
-  <input type="text" name="profile_info"><br><br>
-  <button type="submit">저장</button>
+<h2 class="text-2xl font-bold text-gray-900 mb-6">⚙️ 내 프로필 수정</h2>
+
+<form method="POST" class="bg-white rounded-xl shadow p-6 max-w-xl space-y-5">
+  <div>
+    <label for="role" class="block text-sm font-medium text-gray-700">🧑‍💼 역할</label>
+    <input type="text" id="role" name="role" placeholder="예: 디자이너, PM, 개발자" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm p-2">
+  </div>
+
+  <div>
+    <label for="interests" class="block text-sm font-medium text-gray-700">📌 관심 키워드</label>
+    <input type="text" id="interests" name="interests" placeholder="예: 생성형 AI, 전략 자동화" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm p-2">
+  </div>
+
+  <div>
+    <label for="situation" class="block text-sm font-medium text-gray-700">📎 현재 상황</label>
+    <textarea id="situation" name="situation" rows="3" placeholder="예: 스타트업 초기 팀, 1인 마케터..." class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 text-sm p-2"></textarea>
+  </div>
+
+  <div class="flex justify-end">
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 text-sm">💾 저장하기</button>
+  </div>
 </form>
 {% endblock %}
+

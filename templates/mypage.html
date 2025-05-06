@@ -1,12 +1,46 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>👤 마이페이지</h2>
-<p>현재 로그인 중: {{ user_id }}</p>
+<h2 class="text-2xl font-bold text-gray-900 mb-6">👤 마이페이지</h2>
 
+<!-- 🔹 사용자 정보 -->
+<section class="bg-white rounded-xl p-6 shadow mb-10">
+  <div class="flex justify-between items-center mb-2">
+    <h3 class="text-xl font-semibold text-gray-800">내 정보</h3>
+    <a href="/mypage/edit" class="text-sm text-blue-600 hover:underline">✏️ 프로필 수정</a>
+  </div>
+  <p class="text-gray-700 text-sm">ID: <strong>{{ user_id }}</strong></p>
+  {% if is_admin %}
+    <p class="text-xs text-red-500 mt-1">🛡️ 관리자 계정입니다</p>
+  {% endif %}
+</section>
+
+<!-- 🔹 내 전략 카드 요약 -->
+<section class="mb-10">
+  <div class="flex justify-between items-center mb-2">
+    <h3 class="text-xl font-semibold text-gray-800">📌 선택한 전략 카드</h3>
+    <a href="/mypage/strategies" class="text-sm text-blue-600 hover:underline">전체 보기 →</a>
+  </div>
+
+  {% if strategies %}
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {% for s in strategies[:3] %}
+        <li class="bg-white rounded-lg p-4 shadow">
+          <h4 class="font-semibold text-gray-900 text-sm">{{ s.title }}</h4>
+          <p class="text-xs text-gray-600 mt-1">{{ s.summary[:60] }}...</p>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="text-sm text-gray-500">아직 선택한 전략 카드가 없습니다.</p>
+  {% endif %}
+</section>
+
+<!-- 🔹 관리자 전용 기능 -->
 {% if is_admin %}
-  <p>🛡️ 관리자 계정입니다.</p>
-  <p><a href="/admin">🗂️ 관리자 승인 페이지로 가기</a></p>
-{% else %}
-  <p><a href="/mypage/strategies">내 전략 카드 보기</a></p>
+<section>
+  <h3 class="text-xl font-semibold text-gray-800 mb-2">🛠️ 관리자 도구</h3>
+  <a href="/admin" class="inline-block text-sm bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-700">관리자 대시보드로 이동</a>
+</section>
 {% endif %}
 {% endblock %}
+
