@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from app.models import db, Trend, Scenario, StrategyCard
+import uuid
+
 
 admin_bp = Blueprint("admin", __name__)
 
@@ -46,17 +48,22 @@ def edit_trend(trend_id):
 @admin_bp.route("/admin/trends/new", methods=["GET", "POST"])
 def create_trend():
     if request.method == "POST":
-        title = request.form.get("title")
-        summary = request.form.get("summary")
+        title = request.form.get("title", "").strip()
+        summary = request.form.get("summary", "").strip()
 
-        new_id = f"t{Trend.query.count() + 1}"
+        if not title or not summary:
+            return "❗ 제목과 요약은 필수입니다", 400
+
+        new_id = str(uuid.uuid4())
         trend = Trend(id=new_id, title=title, summary=summary)
+
         db.session.add(trend)
         db.session.commit()
 
         return redirect(url_for("admin.edit_trend", trend_id=new_id))
 
     return render_template("admin_create.html")
+
 
 # admin.py (일부 추가)
 
