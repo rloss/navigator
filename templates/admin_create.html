@@ -1,49 +1,15 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2 class="text-2xl font-bold text-gray-900 mb-6">✍️ 새로운 트렌드 등록</h2>
+<h2 class="text-2xl font-bold text-gray-800 mb-4">🆕 새 트렌드 등록</h2>
 
-<form method="POST" class="space-y-6 max-w-2xl text-sm">
-  <!-- Trend -->
-  <div>
-    <label class="block text-gray-700 font-medium mb-1">트렌드 제목</label>
-    <input name="title" required class="w-full border px-3 py-2 rounded-md" />
-  </div>
+<form method="POST" class="space-y-4">
+  <input type="text" name="title" placeholder="트렌드 제목" required
+         class="w-full border rounded px-4 py-2 text-sm text-gray-800">
+  <textarea name="summary" placeholder="트렌드 요약" required
+            class="w-full border rounded px-4 py-2 text-sm text-gray-800"></textarea>
 
-  <div>
-    <label class="block text-gray-700 font-medium mb-1">트렌드 요약</label>
-    <textarea name="summary" rows="3" required class="w-full border px-3 py-2 rounded-md"></textarea>
-  </div>
-
-  <!-- Scenario -->
-  <div>
-    <label class="block text-gray-700 font-medium mb-1">대표 시나리오</label>
-    <textarea name="scenario" rows="2" class="w-full border px-3 py-2 rounded-md"></textarea>
-  </div>
-
-  <!-- Strategy Card -->
-  <div class="border-t pt-6">
-    <h3 class="text-lg font-semibold mb-3">🧠 전략 카드 정보</h3>
-    <label class="block text-gray-700 font-medium mb-1">전략 카드 제목</label>
-    <input name="strategy_title" class="w-full border px-3 py-2 rounded-md" />
-
-    <label class="block text-gray-700 font-medium mb-1 mt-4">전략 요약</label>
-    <textarea name="strategy_summary" rows="2" class="w-full border px-3 py-2 rounded-md"></textarea>
-
-    <div class="mt-4 grid grid-cols-2 gap-4">
-      <div>
-        <label class="block text-gray-600 mb-1">디자이너용 해석</label>
-        <input name="designer_note" class="w-full border px-3 py-2 rounded-md" />
-      </div>
-      <div>
-        <label class="block text-gray-600 mb-1">기획자용 해석</label>
-        <input name="planner_note" class="w-full border px-3 py-2 rounded-md" />
-      </div>
-    </div>
-  </div>
-
-  <button type="submit"
-          class="mt-6 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md">
-    ✅ 등록하기
+  <button type="submit" class="bg-blue-600 text-white px-5 py-2 rounded text-sm hover:bg-blue-700">
+    ➕ 등록하기
   </button>
 </form>
 {% endblock %}

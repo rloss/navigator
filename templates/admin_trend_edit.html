@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="text-2xl font-bold text-gray-800 mb-4">{{ trend.title }} 편집</h2>
+<p class="text-gray-600 mb-6">{{ trend.summary }}</p>
+
+<!-- 🧩 시나리오 추가 -->
+<section class="mb-10">
+  <h3 class="text-xl font-semibold mb-2">📌 시나리오 추가</h3>
+  <form method="POST" class="space-y-2">
+    <input type="hidden" name="form_type" value="scenario">
+    <input type="text" name="scenario_summary" placeholder="시나리오 요약" class="w-full border rounded px-3 py-2 text-sm">
+    <button type="submit" class="bg-blue-600 text-white px-4 py-1 rounded text-sm">➕ 추가</button>
+  </form>
+
+  <ul class="mt-4 space-y-1 text-sm text-gray-700">
+    {% for s in scenarios %}
+      <li>🔹 {{ s.summary }}</li>
+    {% endfor %}
+  </ul>
+</section>
+
+<!-- 🧠 전략 카드 추가 -->
+<section>
+  <h3 class="text-xl font-semibold mb-2">🧠 전략 카드 추가</h3>
+  <form method="POST" class="space-y-2">
+    <input type="hidden" name="form_type" value="strategy">
+    <input type="text" name="strategy_title" placeholder="전략 제목" class="w-full border rounded px-3 py-2 text-sm">
+    <textarea name="strategy_summary" placeholder="전략 요약" class="w-full border rounded px-3 py-2 text-sm"></textarea>
+    <select name="strategy_scenario_id" class="w-full border rounded px-3 py-2 text-sm">
+      <option value="">연결할 시나리오 선택 (선택)</option>
+      {% for s in scenarios %}
+        <option value="{{ s.id }}">{{ s.summary }}</option>
+      {% endfor %}
+    </select>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-1 rounded text-sm">➕ 추가</button>
+  </form>
+
+  <ul class="mt-4 space-y-1 text-sm text-gray-700">
+    {% for s in strategies %}
+      <li>🧠 {{ s.title }} ({{ s.scenario.summary if s.scenario else '시나리오 없음' }})</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}
