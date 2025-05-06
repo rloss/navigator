@@ -2,14 +2,15 @@ import sys
 import os
 from pathlib import Path
 
-# 루트 경로 등록
+# 루트 경로 추가
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from app import app
-from app.models import db, User, Trend, Scenario, StrategyCard
+from app.models import db, Trend, Scenario, StrategyCard, User
 
 with app.app_context():
     print("📦 DB 테이블 생성 시작...")
+    db.drop_all()  # 💥 모든 기존 테이블 제거 (주의)
     db.create_all()
 
     # ✅ 관리자 계정
@@ -18,69 +19,52 @@ with app.app_context():
         db.session.add(admin)
         print("✅ 관리자 계정 생성")
 
-    # ✅ 트렌드 생성
+    # ✅ 트렌드
     trend = Trend.query.get("t1")
     if not trend:
         trend = Trend(
             id="t1",
             title="생성형 AI의 확산",
-            summary="GPT, Copilot 등 생성형 AI가 업무를 어떻게 바꾸는가?"
+            summary="GPT와 같은 AI 도구들이 업무에 어떤 영향을 미치는가?"
         )
         db.session.add(trend)
-        db.session.flush()
+        db.session.flush()  # ID 참조 가능하게
         print("✅ 트렌드 생성")
-    else:
-        print("✅ 트렌드 이미 존재")
 
-    # ✅ 시나리오들 생성
-    scenarios = [
-        {"id": "s1", "summary": "디자이너가 GPT에게 프로토타입 설계를 맡김"},
-        {"id": "s2", "summary": "PM이 기획안 초안을 GPT로 자동 작성"},
+    # ✅ 시나리오들
+    scenario_list = [
+        Scenario(id="s1", summary="디자이너가 직접 UI 안 만들고 GPT에게 요청", trend_id=trend.id),
+        Scenario(id="s2", summary="기획자가 서비스 구조를 GPT에게 요약시키는 흐름", trend_id=trend.id),
+        Scenario(id="s3", summary="개발자가 코드 베이스 구조화 없이 GPT로 문서화", trend_id=trend.id),
     ]
-    for s in scenarios:
-        if not Scenario.query.get(s["id"]):
-            scenario = Scenario(id=s["id"], summary=s["summary"], trend_id=trend.id)
-            db.session.add(scenario)
-            print(f"✅ 시나리오 생성: {s['id']}")
+    db.session.add_all(scenario_list)
+    print("✅ 시나리오 3개 생성")
 
-    db.session.flush()  # 시나리오 id들 바로 참조 위해
-
-    # ✅ 전략 카드들 생성
-    strategies = [
-        {
-            "id": "st1",
-            "title": "1인 프로덕트 자동화",
-            "summary": "Notion + GPT + Zapier 연동으로 자동 워크플로우 구성",
-            "role_annotations": {
-                "디자이너": "UI 프로토타입 자동 생성",
-                "기획자": "브레인스토밍 결과 자동 문서화"
+    # ✅ 전략 카드들 (시나리오와 직접 연결 ❌)
+    strategy_list = [
+        StrategyCard(
+            id="st1",
+            title="1인 자동화 플로우 만들기",
+            summary="GPT + Notion + Zapier 연계로 자동화",
+            role_annotations={
+                "디자이너": "이미지 생성 자동화",
+                "기획자": "문서 작성 자동화"
             },
-            "scenario_id": "s1"
-        },
-        {
-            "id": "st2",
-            "title": "자동화된 기획서 작성 플로우",
-            "summary": "PM이 요구사항 정리 후 GPT가 문서 초안 생성",
-            "role_annotations": {
-                "PM": "기획안 작성 시간 단축",
-                "디자이너": "요구사항 자동 변환"
+            trend_id=trend.id
+        ),
+        StrategyCard(
+            id="st2",
+            title="기획 문서 요약 자동화",
+            summary="GPT를 통해 피그마/문서/코드 기반 내용을 자동 정리",
+            role_annotations={
+                "기획자": "컨셉 회의 요약",
+                "개발자": "API 정의서 생성"
             },
-            "scenario_id": "s2"
-        }
+            trend_id=trend.id
+        ),
     ]
-
-    for st in strategies:
-        if not StrategyCard.query.get(st["id"]):
-            strategy = StrategyCard(
-                id=st["id"],
-                title=st["title"],
-                summary=st["summary"],
-                role_annotations=st["role_annotations"],
-                trend_id=trend.id,
-                scenario_id=st["scenario_id"]
-            )
-            db.session.add(strategy)
-            print(f"✅ 전략 카드 생성: {st['id']}")
+    db.session.add_all(strategy_list)
+    print("✅ 전략 카드 2개 생성")
 
     db.session.commit()
-    print("🎉 모든 목업 데이터 삽입 완료!")
+    print("✅ 전체 DB 삽입 완료")

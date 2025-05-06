@@ -21,12 +21,10 @@ def edit_trend(trend_id):
         elif form_type == "strategy":
             title = request.form.get("strategy_title")
             summary = request.form.get("strategy_summary")
-            scenario_id = request.form.get("strategy_scenario_id")
             strategy = StrategyCard(
                 title=title,
                 summary=summary,
                 trend_id=trend_id,
-                scenario_id=scenario_id,
                 role_annotations={}  # 기본값 비워두기
             )
             db.session.add(strategy)

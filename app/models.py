@@ -23,9 +23,6 @@ class Scenario(db.Model):
 
     trend_id = db.Column(db.String, db.ForeignKey("trend.id"), nullable=False)
 
-    # 전략카드 연결 (선택적으로 활용)
-    strategies = db.relationship("StrategyCard", backref="scenario", lazy=True)
-
 
 # 🔹 전략 카드: 트렌드 + (선택적) 시나리오 연결
 class StrategyCard(db.Model):
@@ -39,7 +36,6 @@ class StrategyCard(db.Model):
 
     # 연결 관계
     trend_id = db.Column(db.String, db.ForeignKey("trend.id"), nullable=False)
-    scenario_id = db.Column(db.String, db.ForeignKey("scenario.id"), nullable=True)  # 시나리오 연결 (선택)
 
 
 # 🔹 사용자별 선택한 전략 카드

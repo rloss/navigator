@@ -26,18 +26,12 @@
     <input type="hidden" name="form_type" value="strategy">
     <input type="text" name="strategy_title" placeholder="전략 제목" class="w-full border rounded px-3 py-2 text-sm">
     <textarea name="strategy_summary" placeholder="전략 요약" class="w-full border rounded px-3 py-2 text-sm"></textarea>
-    <select name="strategy_scenario_id" class="w-full border rounded px-3 py-2 text-sm">
-      <option value="">연결할 시나리오 선택 (선택)</option>
-      {% for s in scenarios %}
-        <option value="{{ s.id }}">{{ s.summary }}</option>
-      {% endfor %}
-    </select>
     <button type="submit" class="bg-blue-600 text-white px-4 py-1 rounded text-sm">➕ 추가</button>
   </form>
 
   <ul class="mt-4 space-y-1 text-sm text-gray-700">
     {% for s in strategies %}
-      <li>🧠 {{ s.title }} ({{ s.scenario.summary if s.scenario else '시나리오 없음' }})</li>
+      <li>🧠 {{ s.title }} ({{ trend.title }} 기반 전략)</li>
     {% endfor %}
   </ul>
 </section>
