@@ -56,10 +56,13 @@ class UserStrategy(db.Model):
     selected_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 
-# 🔹 사용자 (로그인용)
 class User(db.Model):
     __tablename__ = "user"
-
     id = db.Column(db.String, primary_key=True)  # 로그인 ID
     password = db.Column(db.String, nullable=False)
     is_admin = db.Column(db.Boolean, default=False)
+
+    # ✅ 확장 필드
+    role = db.Column(db.String, nullable=True)
+    interests = db.Column(db.String, nullable=True)
+    situation = db.Column(db.Text, nullable=True)
