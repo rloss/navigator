@@ -1,1 +1,37 @@
-/* 커스텀 스타일 */
+/* main.css */
+
+/* 기본 폰트 설정 */
+body {
+    font-family: 'Pretendard', 'SUIT', sans-serif;
+    font-size: 16px;
+    letter-spacing: -0.015em;
+    line-height: 1.7;
+    color: #1e293b;  /* 진회색 계열 */
+    background-color: #f8fafc;
+  }
+  
+  /* 제목 폰트 커스터마이징 */
+  h1, h2, h3, h4 {
+    font-weight: 600;
+    color: #0f172a;
+    letter-spacing: -0.03em;
+  }
+  
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
+  
+  a {
+    transition: all 0.2s ease;
+  }
+  
+  a:hover {
+    color: #38bdf8;
+  }
+  
