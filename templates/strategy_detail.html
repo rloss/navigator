@@ -1,19 +1,38 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>{{ strategy.title }}</h2>
-<p>{{ strategy.summary }}</p>
 
-<h3>직군별 해석</h3>
-<ul>
-  {% for role, comment in strategy.role_annotations.items() %}
-    <li><strong>{{ role }}:</strong> {{ comment }}</li>
+<!-- 🎯 전략 카드 요약 -->
+<section class="bg-white rounded-xl shadow p-8 mb-10">
+  <h2 class="text-2xl font-bold text-gray-900 mb-2">{{ strategy.title }}</h2>
+  <p class="text-gray-700 text-sm">{{ strategy.summary }}</p>
+</section>
+
+<!-- 🧠 직군별 해석 -->
+<section class="mb-10">
+  <h3 class="text-xl font-semibold text-gray-800 mb-4">👥 직군별 해석</h3>
+
+  {% if strategy.role_annotations %}
+    <ul class="space-y-3">
+      {% for role, comment in strategy.role_annotations.items() %}
+        <li class="bg-gray-100 rounded-lg p-4 text-sm text-gray-700">
+          <strong class="text-gray-900">{{ role }}</strong><br>
+          <span>{{ comment }}</span>
+        </li>
+      {% endfor %}
+    </ul>
   {% else %}
-    <li>해석 없음</li>
-  {% endfor %}
-</ul>
+    <p class="text-sm text-gray-500">📭 제공된 역할별 해석이 없습니다.</p>
+  {% endif %}
+</section>
 
-<form method="POST" action="/strategy/{{ strategy.id }}/select">
-  <button type="submit">이 전략 선택하기</button>
+<!-- ✅ 전략 선택 버튼 -->
+<form method="POST" action="/strategy/{{ strategy.id }}/select" class="mt-8">
+  <button type="submit"
+          class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-6 py-2 rounded-md transition">
+    ✅ 이 전략 선택하기
+  </button>
 </form>
+
 {% endblock %}
+
 
