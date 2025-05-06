@@ -11,21 +11,30 @@
 </section>
 
 <!-- 📊 인기 트렌드 -->
-<section class="mb-10">
-  <h2 class="text-xl font-semibold text-gray-800 mb-4">🔥 지금 주목받는 트렌드</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    {% for trend in trends[:2] %}
-      <div class="bg-white rounded-xl p-5 shadow hover:shadow-lg transition">
-        <h3 class="text-lg font-semibold text-gray-900">{{ trend.title }}</h3>
-        <p class="text-sm text-gray-600 mt-1">{{ trend.summary[:100] }}...</p>
-        <a href="/trend/{{ trend.id }}" class="mt-3 inline-block text-blue-600 hover:underline text-sm">자세히 보기 →</a>
-      </div>
-    {% endfor %}
-    {% if not trends %}
-      <p class="text-sm text-gray-500">등록된 트렌드가 없습니다.</p>
-    {% endif %}
-  </div>
-</section>
+<section class="mb-14">
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-bold text-gray-900">🔥 지금 주목받는 트렌드</h2>
+      <a href="/trends" class="text-blue-600 text-sm hover:underline">전체 보기 →</a>
+    </div>
+  
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {% for trend in trends[:3] %}
+        <div class="bg-white rounded-2xl p-6 shadow hover:shadow-xl transition min-h-[220px] flex flex-col justify-between">
+          <div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-1">{{ trend.title }}</h3>
+            <p class="text-sm text-gray-600">{{ trend.summary[:100] }}...</p>
+          </div>
+          <a href="/trend/{{ trend.id }}" class="mt-4 inline-block text-blue-600 hover:underline text-sm font-medium">
+            자세히 보기 →
+          </a>
+        </div>
+      {% endfor %}
+      {% if not trends %}
+        <p class="text-sm text-gray-500">등록된 트렌드가 없습니다.</p>
+      {% endif %}
+    </div>
+  </section>
+  
 
 <!-- 🧠 전략 카드 프리뷰 -->
 <section class="mb-10">
