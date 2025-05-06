@@ -1,7 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2 class="text-2xl font-bold text-gray-800 mb-4">{{ trend.title }} 편집</h2>
-<p class="text-gray-600 mb-6">{{ trend.summary }}</p>
+
+<!-- 🔧 트렌드 헤더 -->
+<section class="mb-8">
+  <div class="flex justify-between items-center">
+    <div>
+      <h2 class="text-2xl font-bold text-gray-800">{{ trend.title }} 편집</h2>
+      <p class="text-gray-600 mt-1">{{ trend.summary }}</p>
+    </div>
+    <form method="POST" action="/admin/trend/{{ trend.id }}/delete" onsubmit="return confirm('정말 이 트렌드를 삭제할까요?')">
+      <button class="bg-red-600 text-white text-sm px-4 py-2 rounded">트렌드 삭제</button>
+    </form>
+  </div>
+</section>
 
 <!-- 🧩 시나리오 추가 -->
 <section class="mb-10">
@@ -12,9 +23,19 @@
     <button type="submit" class="bg-blue-600 text-white px-4 py-1 rounded text-sm">➕ 추가</button>
   </form>
 
-  <ul class="mt-4 space-y-1 text-sm text-gray-700">
+  <ul class="mt-4 space-y-2 text-sm text-gray-700">
     {% for s in scenarios %}
-      <li>🔹 {{ s.summary }}</li>
+      <li class="flex items-center justify-between bg-gray-100 px-4 py-2 rounded">
+        <form method="POST" action="/admin/scenario/{{ s.id }}/edit" class="flex gap-2 w-full">
+          <input name="new_summary" value="{{ s.summary }}" class="flex-1 border px-2 py-1 text-sm rounded">
+          <button class="bg-blue-500 text-white text-xs px-3 py-1 rounded">수정</button>
+        </form>
+        <form method="POST" action="/admin/scenario/{{ s.id }}/delete" class="ml-2">
+          <button class="bg-red-500 text-white text-xs px-3 py-1 rounded">삭제</button>
+        </form>
+      </li>
+    {% else %}
+      <li class="text-gray-400">등록된 시나리오 없음</li>
     {% endfor %}
   </ul>
 </section>
@@ -29,10 +50,18 @@
     <button type="submit" class="bg-blue-600 text-white px-4 py-1 rounded text-sm">➕ 추가</button>
   </form>
 
-  <ul class="mt-4 space-y-1 text-sm text-gray-700">
+  <ul class="mt-4 space-y-2 text-sm text-gray-700">
     {% for s in strategies %}
-      <li>🧠 {{ s.title }} ({{ trend.title }} 기반 전략)</li>
+      <li class="flex justify-between items-center bg-white px-4 py-2 rounded shadow-sm">
+        <span>{{ s.title }}</span>
+        <form method="POST" action="/admin/strategy/{{ s.id }}/delete">
+          <button class="bg-red-500 text-white text-xs px-3 py-1 rounded">삭제</button>
+        </form>
+      </li>
+    {% else %}
+      <li class="text-gray-400">전략 카드 없음</li>
     {% endfor %}
   </ul>
 </section>
+
 {% endblock %}

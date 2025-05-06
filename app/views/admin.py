@@ -57,3 +57,55 @@ def create_trend():
         return redirect(url_for("admin.edit_trend", trend_id=new_id))
 
     return render_template("admin_create.html")
+
+# admin.py (일부 추가)
+
+# --- 트렌드 삭제 ---
+@admin_bp.route("/admin/trend/<trend_id>/delete", methods=["POST"])
+def delete_trend(trend_id):
+    trend = Trend.query.get(trend_id)
+    if not trend:
+        return "해당 트렌드가 존재하지 않습니다.", 404
+
+    db.session.delete(trend)
+    db.session.commit()
+    return redirect(url_for("trends.trend_list"))
+
+
+# --- 시나리오 수정 ---
+@admin_bp.route("/admin/scenario/<scenario_id>/edit", methods=["POST"])
+def edit_scenario(scenario_id):
+    scenario = Scenario.query.get(scenario_id)
+    if not scenario:
+        return "시나리오가 없습니다", 404
+
+    new_summary = request.form.get("new_summary", "").strip()
+    scenario.summary = new_summary
+    db.session.commit()
+    return redirect(url_for("admin.edit_trend", trend_id=scenario.trend_id))
+
+
+# --- 시나리오 삭제 ---
+@admin_bp.route("/admin/scenario/<scenario_id>/delete", methods=["POST"])
+def delete_scenario(scenario_id):
+    scenario = Scenario.query.get(scenario_id)
+    if not scenario:
+        return "시나리오가 없습니다", 404
+
+    trend_id = scenario.trend_id
+    db.session.delete(scenario)
+    db.session.commit()
+    return redirect(url_for("admin.edit_trend", trend_id=trend_id))
+
+
+# --- 전략카드 삭제 ---
+@admin_bp.route("/admin/strategy/<strategy_id>/delete", methods=["POST"])
+def delete_strategy(strategy_id):
+    strategy = StrategyCard.query.get(strategy_id)
+    if not strategy:
+        return "전략카드가 없습니다", 404
+
+    trend_id = strategy.trend_id
+    db.session.delete(strategy)
+    db.session.commit()
+    return redirect(url_for("admin.edit_trend", trend_id=trend_id))
