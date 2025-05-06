@@ -8,7 +8,7 @@
 </section>
 
 <!-- 🧠 직군별 해석 -->
-<section class="mb-10">
+<section class="mb-12">
   <h3 class="text-xl font-semibold text-gray-800 mb-4">👥 직군별 해석</h3>
 
   {% if strategy.role_annotations %}
@@ -25,14 +25,29 @@
   {% endif %}
 </section>
 
-<!-- ✅ 전략 선택 버튼 -->
-<form method="POST" action="/strategy/{{ strategy.id }}/select" class="mt-8">
-  <button type="submit"
-          class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-6 py-2 rounded-md transition">
-    ✅ 이 전략 선택하기
-  </button>
-</form>
+<!-- ✅ 전략 선택 상태 확인 -->
+<section class="mt-8">
+  {% if session.user_id %}
+    {% if already_selected %}
+      <div class="flex items-center gap-2 bg-green-50 border border-green-300 text-green-700 px-4 py-3 rounded-md text-sm">
+        ✅ 이 전략을 이미 선택했습니다.
+      </div>
+    {% else %}
+      <form method="POST" action="/strategy/{{ strategy.id }}/select">
+        <button type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-6 py-2 rounded-md transition">
+          ✅ 이 전략 선택하기
+        </button>
+      </form>
+    {% endif %}
+  {% else %}
+    <p class="text-sm text-gray-500">
+      🔐 전략 선택을 하려면 <a href="/login" class="text-blue-600 underline">로그인</a>하세요.
+    </p>
+  {% endif %}
+</section>
 
 {% endblock %}
+
 
 
