@@ -6,6 +6,7 @@ from app.views.mypage_edit import mypage_edit_bp
 from app.views.my_strategies import my_strategies_bp
 from app.views.auth import auth_bp
 from app.views.admin import admin_bp
+from app.views.strategy_select import strategy_select_bp
 
 def register_blueprints(app):
     app.register_blueprint(home_bp)
@@ -16,3 +17,4 @@ def register_blueprints(app):
     app.register_blueprint(my_strategies_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(strategy_select_bp)
